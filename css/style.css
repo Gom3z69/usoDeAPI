@@ -1,0 +1,28 @@
+.add-button{
+    position: fixed; /*El botón queda "flotante", sobre el contenido*/
+    bottom: 30px; /*Separación desde la parte de abajo*/
+    right: 40px; /*Separación desde la parte de la derecha*/
+    background-color: rgb(212, 12, 238); /*Color de fondo del botón*/
+    color: white; /*Color del texto*/
+    border-radius: 50%; /*Para redondear las esquinas del botón*/
+    border: none; /*Removemos bordes por defecto*/
+
+    /*Dimensiones para hacer simétrico el botón*/
+    width: 70px;
+    height: 70px;
+    box-shadow: 0 4px 10px rgba(0,0,0, 0.5); /*Sombra del botón*/
+
+    display: flex; /*Activamos flexbox*/
+    justify-content: center; /*Alineación horizontal*/
+    align-items: center; /*Alineación vertical*/
+    z-index: 1001; /*Para que el botón siempre quede ENCIMA del resto del contenido*/
+    transition: transdorm 0.4s; /*Duración del efecto*/
+}
+
+.add-button:hover{
+    transform: scale(1.2);
+}
+
+.tabla-scroll{
+    overflow: auto; /*Para que cuando la pantalla se haga pequeña cuando se haga un scroll*/
+}

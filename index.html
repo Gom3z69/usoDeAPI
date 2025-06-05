@@ -7,13 +7,14 @@
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
 >
-    <title>Expo Management System</title>
+<link rel="stylesheet" href="css/style.css">
+    <title>Management of Students System</title>
 </head>
 <body>
     <header class="container">
         <nav>
             <ul>
-                <li><b>Expo Management System</b></li>
+                <li><b>Management of Students System</b></li>
             </ul>
             <li><a href="#">Integrantes</a></li>
             <li><a href="#">Tareas</a></li>
@@ -24,24 +25,28 @@
     </header>
     <main  class="container">
         <h2>Integrantes del Equipo</h2>
- 
-        <table id="tabla" class="over-flow-auto">
-            <thead>
-                <tr><!--"tr" de table row -  Fila-->
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Correo Electronico</th>
-                    <th>Acciones</th><!--Para los botones-->
-                   
-                </tr>
-            </thead>
-            <tbody>
-                <!--Aqui viene los registros que vienen en el JSON-->
-            </tbody>
-        </table>
- 
+        <div class="tabla-scroll">
+            <table id="tabla" class="overflow-auto">
+                <thead>
+                    <tr><!--"tr" de table row -  Fila-->
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Correo Electronico</th>
+                        <th>Acciones</th><!--Para los botones-->
+                       
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--Aqui viene los registros que vienen en el JSON-->
+                </tbody>
+            </table>    
+        </div>
     </main>
+ 
+    <button class="add-button" id="btnAgregar" title="Agregar Integrantes">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-round-plus-icon lucide-user-round-plus"><path d="M2 21a8 8 0 0 1 13.292-6"/><circle cx="10" cy="8" r="5"/><path d="M19 16v6"/><path d="M22 19h-6"/></svg>
+    </button>
     <!--Enlace al archivo de JS-->
     <script src="js/script.js"></script>
 </body>
