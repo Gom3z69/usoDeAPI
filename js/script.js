@@ -43,6 +43,54 @@ ObtenerRegistros();
 
 
 //Proceso para agregar resgistros
-const modal = querySelector("#mdAgregar"); //Cuadro de diálogo
-const boton = querySelector("#btnAgregar"); //Botón para abrir
-const btnCerrar = querySelector("#btnCerrarModal"); //Botón para cerrar
+const modal = document.querySelector("#mdAgregar"); //Cuadro de diálogo
+const btnAgregar = document.querySelector("#btnAgregar"); //Botón para abrir
+const btnCerrar = document.querySelector("#btnCerrarModal"); //Botón para cerrar
+
+btnAgregar.addEventListener("click", ()=>{
+    modal.showModal(); //Abre el modal cuando a btnAgregar se le hace click
+});
+
+btnCerrar.addEventListener("click", ()=>{
+    modal.close(); //Cierra el modal cuando a btnCerrar se le hace click
+});
+
+//Agregar un nuevo integrante desde el formulario
+document.querySelector("btnAgregar").addEventListener("submit", async e =>{
+    e.preventDefault(); //Evita que los datos se envíen por defecto :o
+
+    //Capturar los valores del formulario
+    const nombre = document.querySelector("txtNombre").value.trim();
+    const apellido = document.querySelector("txtApellido").value.trim();
+    const correo = document.querySelector("txtCorreo").value.trim();
+
+    //Validación básica
+    if(!nombre || !apellido || !correo){
+        alert("Complete todos los campos por favor uwu onichan daiski");
+        return; //Evita que el código se siga ejecutando
+    }
+
+    //Llamar a la API para enviar los datos
+    const respuesta = await fetch(API_URL, {
+        method : "POST", 
+        headers : {'Content-Type' : 'application/json'}, //Content-Type es el tipo de dato que mandamos al JSON
+        body : JSON.stringify({nombre,apellido,correo}) //Un JSON puro lo convierte en String
+    });
+
+    if(respuesta.ok){
+        //Mensaje de confirmación
+        alert("El registro fue agregado correctamente uwu");
+
+        //Limpiar el formulario
+        document.querySelector("btnAgregar").reset();
+
+        //Cerrar el modal (dialog)
+        modal.close();
+
+        //Recargar la tabla
+        ObtenerRegistros();
+    }else{
+        alert("Hubo un error al guardar JASJASJASJAJSJA");
+    }
+
+});
