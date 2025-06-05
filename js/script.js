@@ -39,3 +39,10 @@ function MostrarRegistros(datos) {
     });
 }
 ObtenerRegistros();
+
+
+
+//Proceso para agregar resgistros
+const modal = querySelector("#mdAgregar"); //Cuadro de diálogo
+const boton = querySelector("#btnAgregar"); //Botón para abrir
+const btnCerrar = querySelector("#btnCerrarModal"); //Botón para cerrar
