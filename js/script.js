@@ -32,7 +32,7 @@ function MostrarRegistros(datos) {
                 <td>${persona.correo}</td>
                 <td>
                     <button>Editar</button>
-                    <button>Eliminar</button>
+                    <button onclick= "EliminarRegistro(${persona.id})">Eliminar</button>
                 </td>
             </tr>
         `;
@@ -56,13 +56,13 @@ btnCerrar.addEventListener("click", ()=>{
 });
 
 //Agregar un nuevo integrante desde el formulario
-document.querySelector("btnAgregar").addEventListener("submit", async e =>{
+document.querySelector("#frmAgregar").addEventListener("submit", async e =>{
     e.preventDefault(); //Evita que los datos se envíen por defecto :o
 
     //Capturar los valores del formulario
-    const nombre = document.querySelector("txtNombre").value.trim();
-    const apellido = document.querySelector("txtApellido").value.trim();
-    const correo = document.querySelector("txtCorreo").value.trim();
+    const nombre = document.querySelector("#txtNombre").value.trim();
+    const apellido = document.querySelector("#txtApellido").value.trim();
+    const correo = document.querySelector("#txtCorreo").value.trim();
 
     //Validación básica
     if(!nombre || !apellido || !correo){
@@ -79,10 +79,10 @@ document.querySelector("btnAgregar").addEventListener("submit", async e =>{
 
     if(respuesta.ok){
         //Mensaje de confirmación
-        alert("El registro fue agregado correctamente uwu");
+        alert("El registro fue agregado correctamente UWU");
 
         //Limpiar el formulario
-        document.querySelector("btnAgregar").reset();
+        document.querySelector("#btnAgregar").reset();
 
         //Cerrar el modal (dialog)
         modal.close();
@@ -94,3 +94,18 @@ document.querySelector("btnAgregar").addEventListener("submit", async e =>{
     }
 
 });
+
+//Función para borrar registros
+async function EliminarRegistro(id){
+    const confirmacion = confirm("Realmente quieres eliminar el registro");
+
+    //Validamos si el usuario eligió "Aceptar"
+    if(confirmacion){
+        await fetch(`${API_URL}/${id}`,{
+             method : "DELETE"
+        }); //Llamada al EndPoint
+
+        //Recargar la tabla para actualizar la vista
+        ObtenerRegistros();
+    }
+}
