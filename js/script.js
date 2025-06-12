@@ -31,7 +31,7 @@ function MostrarRegistros(datos) {
                 <td>${persona.apellido}</td>
                 <td>${persona.correo}</td>
                 <td>
-                    <button>Editar</button>
+                    <button onclick="AbrirModalEditar('${persona.id}', '${persona.nombre}', '${persona.apellido}', '${persona.correo}')">Editar</button>
                     <button onclick= "EliminarRegistro(${persona.id})">Eliminar</button>
                 </td>
             </tr>
@@ -39,8 +39,6 @@ function MostrarRegistros(datos) {
     });
 }
 ObtenerRegistros();
-
-
 
 //Proceso para agregar resgistros
 const modal = document.querySelector("#mdAgregar"); //Cuadro de diálogo
@@ -54,6 +52,7 @@ btnAgregar.addEventListener("click", ()=>{
 btnCerrar.addEventListener("click", ()=>{
     modal.close(); //Cierra el modal cuando a btnCerrar se le hace click
 });
+
 
 //Agregar un nuevo integrante desde el formulario
 document.querySelector("#frmAgregar").addEventListener("submit", async e =>{
@@ -97,7 +96,7 @@ document.querySelector("#frmAgregar").addEventListener("submit", async e =>{
 
 //Función para borrar registros
 async function EliminarRegistro(id){
-    const confirmacion = confirm("Realmente quieres eliminar el registro");
+    const confirmacion = confirm("¿Realmente quieres eliminar el registro? ¿O solamente es el sentimiento de que los problemas desaparezcan de tu vida sin siquiera enfrentarlos?");
 
     //Validamos si el usuario eligió "Aceptar"
     if(confirmacion){
@@ -109,3 +108,55 @@ async function EliminarRegistro(id){
         ObtenerRegistros();
     }
 }
+
+//Función para editar registros
+const modalEditar = document.querySelector("#mdEditar");
+const btnCerrarEditar = document.querySelector("#btnCerrarEditar");
+
+//Funcionalidad para cerrar el modal
+btnCerrarEditar.addEventListener("click", ()=>{
+    modalEditar.close(); //Cerrar modal de editar
+})
+
+//Función para abrir el modal
+function AbrirModalEditar(id, nombre, apellido, correo){
+    //Agregamos los valores a los input antes de abrir el modal
+    document.querySelector("#txtIdEditar").value = id;
+    document.querySelector("#txtNombreEditar").value = nombre;
+    document.querySelector("#txtApellidoEditar").value = apellido;
+    document.querySelector("#txtCorreoEditar").value = correo;
+
+    //Modal se abre después de agregar los valores a los input
+    modalEditar.showModal();
+}
+
+document.querySelector("#frmEditar").addEventListener("submit", async e => {
+    e.preventDefault(); //Evita que el formulario se envíe de golpe
+
+    //Capturamos los valores nuevos del formulario
+    const id = document.querySelector("#txtIdEditar").value;
+    const nombre = document.querySelector("#txtNombreEditar").value.trim();
+    const apellido = document.querySelector("#txtApellidoEditar").value.trim();
+    const correo = document.querySelector("#txtCorreoEditar").value.trim();
+
+    //Validacion de los campos
+    if(!id || !nombre || !apellido || !correo){
+        alert("Estás seguro de no llenar algún campo? Complete todos los campos por favor.")
+        return; //Evita que el código se siga ejecutando
+    }
+
+    //Llamada a la API
+    const respuesta = await fetch(`${API_URL}/${id}`,{
+        method : "PUT",
+        headers : {'Content-Type' : 'application/json'}, //Content-Type es el tipo de dato que mandamos al JSON
+        body : JSON.stringify({correo, nombre, apellido}) //Un JSON puro lo convierte en String
+   });
+
+   if(respuesta.ok){
+    alert("Registro actualizado correctamente mi querido terricola"); //Confirmación
+    modalEditar.close(); //Creamos el modal
+    ObtenerRegistros(); //Recargamos la tabla
+   }else{
+    alert("Hubo un bendito error al actualizar, lo has hecho mal...")
+   }
+});
